@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: rgb(232, 214, 248);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        main h1{
+            text-align: center;
+            width: 70%;
+            border-bottom: 2px solid rgb(47, 14, 78);
+            padding-bottom: 20px;
+        }
+
+        .hidden-result{
+            display: none;
+        }
+
+        .introduction-section{
+            width: 70%;
+            margin: 10px;
+            padding-top: 20px;
+            padding-bottom: 50px;
+            border-radius: 20px;
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .display-section{
+            width: 70%;
+            margin: 10px;
+            padding-top: 20px;
+            padding-bottom: 50px;
+            border-radius: 20px;
+            background-color: white;
+            box-shadow: 5px 5px 5px rgb(177, 177, 177, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .form-section{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .text-display-justify{
+            width: 80%;
+            text-align: justify;
+        }
+
+        input{
+            
+            width: 80%;
+            height: 40px;
+            color: rgb(47, 14, 78);
+            background-color: rgb(249, 242, 249);
+            border: transparent;
+            border-radius: 3px ;
+
+        }
+
+        .buttons-section{
+            display: flex;
+            flex-direction: row;
+            gap: 150px;
+        }
+
+        button{
+            border: transparent;
+            background-color: rgb(232, 214, 248);
+            width: 150px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        .link-no-decoration{
+            text-decoration: none;
+            color: black;
+        }
+
+        .short-link-result{
+            font-size: x-large;
+            font-weight: bolder;
+            color: rgb(204, 147, 255);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>MiniLink</h1>
+
+        <div class="introduction-section">
+            <h2 class="text-display-justify">Shorten your links and generate QR codes</h2>
+            <p class="text-display-justify">QR Codes allow smartphone users to access your website simply and quickly.</p>
+            <p class="text-display-justify">Shorts URLs are easier to remember, more aesthetic and visually appealing when embedded or shared on social media that have strict character limits.</p>
+        </div>
+
+        <div class="display-section">
+            {% csrf_token %}
+            <form method="POST" class="form-section">
+                <label class="text-display-justify">Put your link below, to reduce it and generate a QR code, if you need :</label>
+                <input type="url" name="url" required id="given-url" placeholder="URL to reduce"> 
+                <div class="buttons-section">
+                    <button type="submit" id="reduce-url-btn"> 
+                        <span class="material-symbols-outlined">
+                            link
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="display-section">
+            <h2>Shortened URL</h2>
+            <p>
+                <a target="_blank" class="link-no-decoration short-link-result" href="{{ short_url }}">
+                    {{ short_url }}
+                </a>
+            </p>
+            <h3>Your short QR Code :</h3>
+            <img src="data:image/png;base64,{{ qr_code_data }}" alt="QR Code">
+            <a class="link-no-decoration" href="/">Generate another QR Code</a>
+        </div>
+    </main>
+</body>
+</html>
